@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "656945308340",
+    "firebase_url": "https://imtpmd-e2fc4.firebaseio.com",
+    "project_id": "imtpmd-e2fc4",
+    "storage_bucket": "imtpmd-e2fc4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:656945308340:android:505a4ffff4e02474",
+        "android_client_info": {
+          "package_name": "com.example.djohalo2.imtpmd_eindopdracht"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "656945308340-f41ua3bk61q65e45bfuko2ht380cgr0h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDmjMDweWkyy1nzomH1AL0i7_k4Rih6II"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
