@@ -101,7 +101,7 @@ public class VakActivity extends AppCompatActivity {
                 Toast t = Toast.makeText(VakActivity.this, toastMessage, Toast.LENGTH_LONG);
                 t.show();
 
-                Intent intent = new Intent(VakActivity.this, MainActivity.class);
+                Intent intent = new Intent(VakActivity.this, DrawerActivity.class);
                 startActivity(intent);
             }
         });
