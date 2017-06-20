@@ -22,7 +22,7 @@
         <activity android:name=".VakActivity" />
         <activity
             android:name=".DrawerActivity"
-            android:label="@string/title_activity_drawer"
+            android:label="Studievolg"
             android:theme="@style/AppTheme.NoActionBar"
             >
             <intent-filter>

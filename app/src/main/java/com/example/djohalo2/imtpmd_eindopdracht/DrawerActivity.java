@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.djohalo2.imtpmd_eindopdracht.Fragments.AfgerondeVakkenFragment;
 import com.example.djohalo2.imtpmd_eindopdracht.Fragments.MainFragment;
 
 public class DrawerActivity extends AppCompatActivity
@@ -86,8 +87,11 @@ public class DrawerActivity extends AppCompatActivity
                     .replace(R.id.content_frame
                             , new MainFragment())
                     .commit();
-        } else if (id == R.id.nav_gallery) {
-
+        } else if (id == R.id.nav_afgeronde_vakken) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame
+                            , new AfgerondeVakkenFragment())
+                    .commit();
         } else if (id == R.id.nav_slideshow) {
 
         }

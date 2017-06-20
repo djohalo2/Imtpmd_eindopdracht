@@ -21,6 +21,13 @@
         <item>Periode 3</item>
         <item>Periode 4</item>
     </string-array>
+
+    <string-array name="afgerond">
+        <item>Alle vakken</item>
+        <item>Behaald</item>
+        <item>Niet behaald</item>
+    </string-array>
+
     <string name="title_activity_drawer">DrawerActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

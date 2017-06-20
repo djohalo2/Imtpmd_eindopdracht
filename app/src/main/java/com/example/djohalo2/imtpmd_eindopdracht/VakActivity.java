@@ -62,11 +62,9 @@ public class VakActivity extends AppCompatActivity {
                 Log.i("Count " ,""+dataSnapshot.getChildrenCount());
                 for (DataSnapshot vakSnapshot: dataSnapshot.getChildren()) {
                     Vak vak = vakSnapshot.getValue(Vak.class);
-                    Log.e("opgehaaldvak", vak.getNaam());
-                    Log.e("selectedvak", vakNaam);
+
                     if(vak.getNaam().equals(vakNaam)){
                         positie = count;
-                        Log.d("positie1", String.valueOf(positie));
                     }
                     count++;
                 }
@@ -82,27 +80,43 @@ public class VakActivity extends AppCompatActivity {
 
         afrondBtn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                DatabaseReference childRef = database.getReference("users/" + uid + "/vakken/" + positie);
-                Map<String, Object> vakUpdates = new HashMap<String, Object>();
-                vakUpdates.put("gevolgd", true);
+                Log.e("cijferinput", String.valueOf(cijferInput.getText()));
+                if(!String.valueOf(cijferInput.getText()).equals("")){
+                    double cijfer = Double.parseDouble(String.valueOf(cijferInput.getText()));
+                    boolean voldoende = cijfer >= 5.5 && gehaaldSwitch.isChecked();
+                    boolean onvoldoende = cijfer < 5.5 && !gehaaldSwitch.isChecked();
+                    if(voldoende || onvoldoende){
+                        DatabaseReference childRef = database.getReference("users/" + uid + "/vakken/" + positie);
+                        Map<String, Object> vakUpdates = new HashMap<String, Object>();
+                        vakUpdates.put("gevolgd", true);
 
-                String toastMessage;
-                if(gehaaldSwitch.isChecked()){
-                    vakUpdates.put("gehaald", true);
-                    toastMessage = "Gefeliciteerd met het behalen van dit vak!";
-                }else {
-                    vakUpdates.put("gehaald", false);
-                    toastMessage = "Helaas, volgende keer beter.";
+                        String toastMessage;
+                        if(gehaaldSwitch.isChecked()){
+                            vakUpdates.put("gehaald", true);
+                            toastMessage = "Gefeliciteerd met het behalen van dit vak!";
+                        }else {
+                            vakUpdates.put("gehaald", false);
+                            toastMessage = "Helaas, volgende keer beter.";
+                        }
+
+                        vakUpdates.put("cijfer", Double.parseDouble(cijferInput.getText().toString()));
+                        childRef.updateChildren(vakUpdates);
+
+                        Toast t = Toast.makeText(VakActivity.this, toastMessage, Toast.LENGTH_LONG);
+                        t.show();
+
+                        Intent intent = new Intent(VakActivity.this, DrawerActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast t = Toast.makeText(VakActivity.this, "De combinatie klopt niet, controleer de ingevulde gegevens.", Toast.LENGTH_LONG);
+                        t.show();
+
+                    }
+
+                } else {
+                    Toast t = Toast.makeText(VakActivity.this, "Vul je cijfer in om het vak af te ronden.", Toast.LENGTH_LONG);
+                    t.show();
                 }
-
-                vakUpdates.put("cijfer", Double.parseDouble(cijferInput.getText().toString()));
-                childRef.updateChildren(vakUpdates);
-
-                Toast t = Toast.makeText(VakActivity.this, toastMessage, Toast.LENGTH_LONG);
-                t.show();
-
-                Intent intent = new Intent(VakActivity.this, DrawerActivity.class);
-                startActivity(intent);
             }
         });
     }

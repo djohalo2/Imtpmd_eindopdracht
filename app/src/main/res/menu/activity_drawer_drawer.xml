@@ -7,9 +7,9 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="Dashboard" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_afgeronde_vakken"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="Afgeronde vakken" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
