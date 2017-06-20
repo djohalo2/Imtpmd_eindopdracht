@@ -81,6 +81,6 @@ public class Vak {
 
     @Override
     public String toString() {
-        return naam + " " + ec;
+        return naam + " - " + "Periode " + periode;
     }
 }

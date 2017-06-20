@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.example.djohalo2.imtpmd_eindopdracht.Models.Vak;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,43 +45,73 @@ public class YearActivity extends AppCompatActivity {
         final int keuzevak = yearBundle.getInt("keuzevak");
 
         ref = database.getReference("users/" + uid + "/vakken");
-        Log.d("ref: ", ref.toString());
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.i("Count " ,""+dataSnapshot.getChildrenCount());
-                for (DataSnapshot vakSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot vakSnapshot : dataSnapshot.getChildren()) {
                     Vak vak = vakSnapshot.getValue(Vak.class);
-                    Log.i("Get Data", String.valueOf(vak.getJaar()));
-                    Log.i("Jaartjee", String.valueOf(jaar));
-                    if(jaar == vak.getJaar() && !vak.isKeuzevak() && !vak.isGevolgd()){
+                    if (jaar == vak.getJaar() && !vak.isKeuzevak() && !vak.isGevolgd()) {
                         vakkenLijst.add(vak);
-                        Log.e("Vak toegevoegd", vak.getNaam());
-                    }else if(vak.isKeuzevak() && keuzevak == 1){
+                    } else if (vak.isKeuzevak() && keuzevak == 1) {
                         vakkenLijst.add(vak);
                     }
-
                 }
-                ListAdapter la = new ArrayAdapter<Vak>(YearActivity.this,
-                        android.R.layout.simple_list_item_1,
-                        vakkenLijst);
 
-                lv.setAdapter(la);
-                lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-                   @Override
-                   public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                       Intent i = new Intent(YearActivity.this, VakActivity.class);
-                       i.putExtra("vaknaam", vakkenLijst.get(position).getNaam());
-                       i.putExtra("positie", position);
-                       startActivity(i);
-                   }
+                Log.e("Vakkenlijst lengte", String.valueOf(vakkenLijst.size()));
+
+                Spinner dropdown = (Spinner) findViewById(R.id.dropdown);
+
+                fillList(vakkenLijst);
+
+                dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        final ArrayList<Vak> filteredVakkenLijst = new ArrayList<>();
+
+                        for (int i = 0; i < vakkenLijst.size(); i++) {
+                            String vakPeriode = "Periode " + String.valueOf(vakkenLijst.get(i).getPeriode());
+                            String selectedPeriode = String.valueOf(parent.getSelectedItem());
+
+                            if (vakPeriode.equals(selectedPeriode)) {
+                                filteredVakkenLijst.add(vakkenLijst.get(i));
+                            } else if (selectedPeriode.equals("Alle periodes")) {
+                                filteredVakkenLijst.add(vakkenLijst.get(i));
+                            }
+                        }
+
+                        fillList(filteredVakkenLijst);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
                 });
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
+            }
+
+            public void fillList(ArrayList<Vak> vakken){
+                final ArrayList<Vak> vakjes = vakken;
+
+                ListAdapter la = new ArrayAdapter<Vak>(YearActivity.this,
+                        android.R.layout.simple_list_item_1,
+                        vakjes);
+
+                lv.setAdapter(la);
+                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent i = new Intent(YearActivity.this, VakActivity.class);
+                        i.putExtra("vaknaam", vakjes.get(position).getNaam());
+                        i.putExtra("positie", position);
+                        startActivity(i);
+                    }
+                });
             }
         });
 
