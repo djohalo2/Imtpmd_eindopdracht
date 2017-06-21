@@ -124,30 +124,31 @@ public class MainFragment extends Fragment {
                 List<BarEntry> tekortEntries = new ArrayList<>();
 
                 for(int j = 0; j < ecPerJaar.length; j++){
-                    totaalEntries.add(new BarEntry(j, 60, "Jaar " + String.valueOf((j + 1))));
+//                    totaalEntries.add(new BarEntry(j, 60, "Jaar " + String.valueOf((j + 1))));
                     gehaaldEntries.add(new BarEntry(j, ecPerJaar[j]));
                     tekortEntries.add(new BarEntry(j, nietGehaaldPerJaar[j]));
                 }
 
-                BarDataSet totaalSet = new BarDataSet(totaalEntries, "Totaal te behalen EC");
+//                BarDataSet totaalSet = new BarDataSet(totaalEntries, "Totaal te behalen EC");
                 BarDataSet gehaaldSet = new BarDataSet(gehaaldEntries, "Gehaalde EC");
                 BarDataSet tekortSet = new BarDataSet(tekortEntries, "Missende EC");
 
-                totaalSet.setColor(Color.parseColor("#2196F3"));
+//                totaalSet.setColor(Color.parseColor("#2196F3"));
                 gehaaldSet.setColor(Color.parseColor("#4CAF50"));
                 tekortSet.setColor(Color.parseColor("#F44336"));
 
-                float groupSpace = 0.06f;
+                float groupSpace = 0.35f;
                 float barSpace = 0.02f;
-                float barWidth = 0.20f;
+                float barWidth = 0.30f;
 
                 ArrayList<String> labels = new ArrayList<>();
                 labels.add("Jaar 1");
-                labels.add("Jaar 2");
-                labels.add("Jaar 3");
-                labels.add("Jaar 4");
+                labels.add("   Jaar 2");
+                labels.add("   Jaar 3");
+                labels.add("   Jaar 4");
 
-                BarData barData = new BarData(totaalSet, gehaaldSet, tekortSet);
+                jaarOverzicht.setDescription(null);
+                BarData barData = new BarData(gehaaldSet, tekortSet);
                 barData.setBarWidth(barWidth);
                 jaarOverzicht.setData(barData);
 
@@ -157,7 +158,7 @@ public class MainFragment extends Fragment {
                 xAxis.setGranularityEnabled(true);
                 xAxis.setCenterAxisLabels(true);
                 xAxis.setDrawGridLines(false);
-                xAxis.setAxisMaximum(6);
+                xAxis.setAxisMaximum(4);
                 xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                 xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
 
