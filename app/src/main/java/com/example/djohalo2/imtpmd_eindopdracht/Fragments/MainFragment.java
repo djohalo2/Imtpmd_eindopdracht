@@ -117,7 +117,7 @@ public class MainFragment extends Fragment {
                     }
                 }
 
-                BarChart jaarOverzicht = (BarChart) getView().findViewById(R.id.chart);
+                BarChart jaarOverzicht = (BarChart) myView.findViewById(R.id.chart);
 
                 List<BarEntry> gehaaldEntries = new ArrayList<>();
                 List<BarEntry> totaalEntries = new ArrayList<>();
@@ -167,9 +167,9 @@ public class MainFragment extends Fragment {
                 jaarOverzicht.animateY(1000);
 
                 totaalStudiepunten += studiepuntenKeuzevakken;
-                TextView studiepuntProgressBarText = (TextView) getView().findViewById(R.id.progress_bar_text);
+                TextView studiepuntProgressBarText = (TextView) myView.findViewById(R.id.progress_bar_text);
 
-                ProgressBar studiepuntProgressBar = (ProgressBar) getView().findViewById(R.id.studiepunt_progress_bar);
+                ProgressBar studiepuntProgressBar = (ProgressBar) myView.findViewById(R.id.studiepunt_progress_bar);
                 double percentage = (double) gehaaldeStudiepunten / totaalStudiepunten;
                 int progress = (int) Math.round(percentage * 100);
                 studiepuntProgressBar.setProgress(progress);
@@ -182,11 +182,11 @@ public class MainFragment extends Fragment {
             }
         });
 
-        Button keuzevakBtn = (Button)getView().findViewById(R.id.keuzevak_btn);
+        Button keuzevakBtn = (Button)myView.findViewById(R.id.keuzevak_btn);
 
         Button[] yearsArr = new Button[4];
         for(i = 0; i < yearsArr.length; i++){
-            yearsArr[i] = (Button)getView().findViewById(getResources().getIdentifier("year" + (i + 1) + "_btn", "id", getActivity().getPackageName()));
+            yearsArr[i] = (Button)myView.findViewById(getResources().getIdentifier("year" + (i + 1) + "_btn", "id", getActivity().getPackageName()));
         }
 
         yearsArr[0].setOnClickListener(new View.OnClickListener(){

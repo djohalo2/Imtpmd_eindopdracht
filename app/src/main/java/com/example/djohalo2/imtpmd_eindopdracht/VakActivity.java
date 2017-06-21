@@ -62,7 +62,6 @@ public class VakActivity extends AppCompatActivity {
                 Log.i("Count " ,""+dataSnapshot.getChildrenCount());
                 for (DataSnapshot vakSnapshot: dataSnapshot.getChildren()) {
                     Vak vak = vakSnapshot.getValue(Vak.class);
-
                     if(vak.getNaam().equals(vakNaam)){
                         positie = count;
                     }
@@ -107,12 +106,11 @@ public class VakActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(VakActivity.this, DrawerActivity.class);
                         startActivity(intent);
+                        VakActivity.this.finish();
                     } else {
                         Toast t = Toast.makeText(VakActivity.this, "De combinatie klopt niet, controleer de ingevulde gegevens.", Toast.LENGTH_LONG);
                         t.show();
-
                     }
-
                 } else {
                     Toast t = Toast.makeText(VakActivity.this, "Vul je cijfer in om het vak af te ronden.", Toast.LENGTH_LONG);
                     t.show();
