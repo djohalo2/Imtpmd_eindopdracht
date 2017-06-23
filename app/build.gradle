@@ -7,7 +7,7 @@ android {
         applicationId "com.example.djohalo2.imtpmd_eindopdracht"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 1
+        versionCode 5
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
