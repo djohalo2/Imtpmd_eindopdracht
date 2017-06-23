@@ -1,5 +1,6 @@
 package com.example.djohalo2.imtpmd_eindopdracht;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 
 import com.example.djohalo2.imtpmd_eindopdracht.Fragments.AfgerondeVakkenFragment;
 import com.example.djohalo2.imtpmd_eindopdracht.Fragments.MainFragment;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -92,8 +94,11 @@ public class DrawerActivity extends AppCompatActivity
                     .replace(R.id.content_frame
                             , new AfgerondeVakkenFragment())
                     .commit();
-        } else if (id == R.id.nav_slideshow) {
-
+        } else if (id == R.id.nav_uitloggen) {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(DrawerActivity.this, MainLoginActivity.class);
+            startActivity(intent);
+            DrawerActivity.this.finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -159,6 +159,7 @@ public class MainFragment extends Fragment {
                 xAxis.setCenterAxisLabels(true);
                 xAxis.setDrawGridLines(false);
                 xAxis.setAxisMaximum(4);
+                xAxis.setAxisMinimum(0);
                 xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                 xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
 

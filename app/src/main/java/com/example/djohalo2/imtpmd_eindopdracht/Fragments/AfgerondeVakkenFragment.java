@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.djohalo2.imtpmd_eindopdracht.Models.Vak;
 import com.example.djohalo2.imtpmd_eindopdracht.R;
@@ -69,6 +70,11 @@ public class AfgerondeVakkenFragment extends Fragment {
 
                 Spinner dropdown = (Spinner) getView().findViewById(R.id.dropdown);
 
+                if(afgerondeVakken.isEmpty()){
+                    TextView geenAfgerondeVakkenMessage = (TextView) getView().findViewById(R.id.hidden_message);
+                    geenAfgerondeVakkenMessage.setVisibility(View.VISIBLE);
+                }
+
                 fillList(afgerondeVakken);
 
                 dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -98,11 +104,15 @@ public class AfgerondeVakkenFragment extends Fragment {
 
             public void fillList(ArrayList<Vak> vakken){
                 final ArrayList<Vak> vakjes = vakken;
+                ArrayList<String> stringVakken = new ArrayList<>();
+                for(int j = 0; j < vakjes.size(); j++){
+                    stringVakken.add(vakjes.get(j).getNaam() + " - " + String.valueOf(vakjes.get(j).getCijfer()));
+                }
 
                 ListAdapter la = new ArrayAdapter<>(getActivity(),
                         android.R.layout.simple_list_item_1,
-                        vakjes);
-
+                        stringVakken);
+                lv.setOnItemClickListener(null);
                 lv.setAdapter(la);
             }
         });

@@ -46,7 +46,6 @@ public class VakActivity extends AppCompatActivity {
 
         final String vakNaam = bundle.getString("vaknaam");
 
-
         vakTextView.setText("Heb je het vak " + vakNaam + " gehaald?");
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -79,43 +78,50 @@ public class VakActivity extends AppCompatActivity {
 
         afrondBtn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Log.e("cijferinput", String.valueOf(cijferInput.getText()));
-                if(!String.valueOf(cijferInput.getText()).equals("")){
+                String cijferString = String.valueOf(cijferInput.getText());
+                if(!cijferString.equals("") && !cijferString.equals(".")){
                     double cijfer = Double.parseDouble(String.valueOf(cijferInput.getText()));
-                    boolean voldoende = cijfer >= 5.5 && gehaaldSwitch.isChecked();
-                    boolean onvoldoende = cijfer < 5.5 && !gehaaldSwitch.isChecked();
-                    if(voldoende || onvoldoende){
-                        DatabaseReference childRef = database.getReference("users/" + uid + "/vakken/" + positie);
-                        Map<String, Object> vakUpdates = new HashMap<String, Object>();
-                        vakUpdates.put("gevolgd", true);
+                    if(cijfer >= 1 && cijfer <= 10){
+                        boolean voldoende = cijfer >= 5.5 && gehaaldSwitch.isChecked();
+                        boolean onvoldoende = cijfer < 5.5 && !gehaaldSwitch.isChecked();
 
-                        String toastMessage;
-                        if(gehaaldSwitch.isChecked()){
-                            vakUpdates.put("gehaald", true);
-                            toastMessage = "Gefeliciteerd met het behalen van dit vak!";
-                        }else {
-                            vakUpdates.put("gehaald", false);
-                            toastMessage = "Helaas, volgende keer beter.";
+                        if(voldoende || onvoldoende){
+                            DatabaseReference childRef = database.getReference("users/" + uid + "/vakken/" + positie);
+                            Map<String, Object> vakUpdates = new HashMap<String, Object>();
+                            vakUpdates.put("gevolgd", true);
+
+                            String toastMessage;
+                            if(gehaaldSwitch.isChecked()){
+                                vakUpdates.put("gehaald", true);
+                                toastMessage = "Gefeliciteerd met het behalen van dit vak!";
+                            }else {
+                                vakUpdates.put("gehaald", false);
+                                toastMessage = "Helaas, volgende keer beter.";
+                            }
+
+                            vakUpdates.put("cijfer", Double.parseDouble(cijferInput.getText().toString()));
+                            childRef.updateChildren(vakUpdates);
+
+                            showToast(toastMessage);
+
+                            Intent intent = new Intent(VakActivity.this, DrawerActivity.class);
+                            startActivity(intent);
+                            VakActivity.this.finish();
+                        } else {
+                            showToast("De combinatie klopt niet, controleer de ingevulde gegevens.");
                         }
-
-                        vakUpdates.put("cijfer", Double.parseDouble(cijferInput.getText().toString()));
-                        childRef.updateChildren(vakUpdates);
-
-                        Toast t = Toast.makeText(VakActivity.this, toastMessage, Toast.LENGTH_LONG);
-                        t.show();
-
-                        Intent intent = new Intent(VakActivity.this, DrawerActivity.class);
-                        startActivity(intent);
-                        VakActivity.this.finish();
                     } else {
-                        Toast t = Toast.makeText(VakActivity.this, "De combinatie klopt niet, controleer de ingevulde gegevens.", Toast.LENGTH_LONG);
-                        t.show();
+                        showToast("Vul een correct cijfer tussen de 1 en 10 in.");
                     }
                 } else {
-                    Toast t = Toast.makeText(VakActivity.this, "Vul je cijfer in om het vak af te ronden.", Toast.LENGTH_LONG);
-                    t.show();
+                    showToast("Vul je cijfer in om het vak af te ronden.");
                 }
             }
         });
+    }
+
+    public void showToast(String text) {
+        Toast t = Toast.makeText(VakActivity.this, text, Toast.LENGTH_LONG);
+        t.show();
     }
 }

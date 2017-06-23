@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.djohalo2.imtpmd_eindopdracht.Models.Vak;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class YearActivity extends AppCompatActivity {
+
+    int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,11 @@ public class YearActivity extends AppCompatActivity {
                 Log.e("Vakkenlijst lengte", String.valueOf(vakkenLijst.size()));
 
                 Spinner dropdown = (Spinner) findViewById(R.id.dropdown);
+
+                if(vakkenLijst.isEmpty()){
+                    TextView geenVakkenMessage = (TextView) findViewById(R.id.hidden_text);
+                    geenVakkenMessage.setVisibility(View.VISIBLE);
+                }
 
                 fillList(vakkenLijst);
 
@@ -114,7 +122,12 @@ public class YearActivity extends AppCompatActivity {
                 });
             }
         });
+    }
 
-
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
     }
 }
